@@ -11,6 +11,9 @@ df = pd.read_csv('superstore.csv', encoding = "ISO-8859-1")
 
 # Dataset 'Processing'
 
+df['Year'] = pd.to_datetime(df['Ship Date']).dt.year # added a year column for easier data sorting
+df.drop(df.index[df['Year'] == 2018], inplace = True) # 2018 has incomplete data, so we drop the whole year
+
 # Sales and Profit chart
 df_3bar = df.filter(['Sub-Category', 'Sales', 'Discount', 'Profit'], axis=1)
 df_3bar['DiscountMoney'] = df_3bar['Discount'] * df_3bar['Sales']
@@ -19,9 +22,7 @@ df_3bar.rename(columns={'DiscountMoney':'Discount'}, inplace=True)
 df_graph = df_3bar.groupby(['Sub-Category']).sum().reset_index()
 
 # Lineplot profit by category by year
-df_lineplot = df.filter(['Ship Date', 'Category', 'Profit'], axis=1)
-df_lineplot['Year'] = pd.to_datetime(df_lineplot['Ship Date']).dt.year
-del df_lineplot['Ship Date']
+df_lineplot = df.filter(['Year', 'Category', 'Profit'], axis=1)
 df_lineorganized = df_lineplot.groupby(['Year', 'Category'], as_index=False)['Profit'].sum()
 dummies = pd.get_dummies(df_lineorganized['Category']).mul(df_lineorganized.Profit,0)
 dummies['Year'] = df_lineorganized['Year']
