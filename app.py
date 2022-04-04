@@ -28,8 +28,8 @@ dummies['Year'] = df_lineorganized['Year']
 df_linegraph = dummies.groupby(['Year']).sum().reset_index()
 
 # Building our Graphs (nothing new here)
-sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group")
-lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology']).update_xaxes(dtick=1)
+sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group").update_layout(legend_title="Type")
+lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology']).update_xaxes(dtick=1).update_layout(legend_title="Category")
 
 # The App itself
 app = dash.Dash(__name__)
