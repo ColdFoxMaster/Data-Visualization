@@ -6,6 +6,9 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
+# our imports
+from text_samples import GRAFICOS_NUNO
+
 # Dataset loading
 df = pd.read_csv('superstore.csv', encoding = "ISO-8859-1")
 
@@ -39,15 +42,17 @@ server = app.server
 app.layout = html.Div([
     html.H1(children='Projeto something'),
     html.Div([
+        html.Div([GRAFICOS_NUNO], style={'float': 'left', 'width': '19%'}),
         html.Div([
-            html.H3('Sales and Profit Graph'),
-            dcc.Graph(id='g1', figure=sales_profit_fig)
-        ], style={'width': '48%', 'display': 'inline-block'}),
-
-        html.Div([
-            html.H3('Yearly Profit Graph'),
-            dcc.Graph(id='g2', figure=lineplot_profit_fig)
-        ], style={'width': '48%', 'display': 'inline-block'}),
+            html.Div([
+                html.H3('Sales and Profit Graph'),
+                dcc.Graph(id='g1', figure=sales_profit_fig)
+            ], style={'width': '48%', 'display': 'inline-block'}),
+            html.Div([
+                html.H3('Yearly Profit Graph'),
+                dcc.Graph(id='g2', figure=lineplot_profit_fig)
+            ], style={'width': '48%', 'display': 'inline-block'}),
+        ], style={'float': 'right', 'width': '80%'})
     ])
 ])
 
