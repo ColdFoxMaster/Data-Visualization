@@ -49,25 +49,29 @@ app.layout = html.Div([
         html.Div([GRAFICOS_NUNO], style={'float': 'left', 'width': '19%'}),
         html.Div([
             html.Div([
-                html.H3('Sales and Profit Graph'),
-                dcc.Graph(id='g1', figure=sales_profit_fig)
-            ], style={'width': '48%', 'display': 'inline-block'}),
-            html.Div([
-                html.H3('Yearly Profit Graph'),
-                dcc.Graph(id='g2', figure=lineplot_profit_fig)
-            ], style={'width': '48%', 'display': 'inline-block'}),
-        ], style={'float': 'right', 'width': '80%'}),
+                html.Div([GRAFICOS_NUNO]),
+                html.Div([
+                    html.H3('Sales and Profit Graph'),
+                    dcc.Graph(id='g1', figure=sales_profit_fig)
+                ], style={'width': '48%', 'display': 'inline-block'}),
+                html.Div([
+                    html.H3('Yearly Profit Graph'),
+                    dcc.Graph(id='g2', figure=lineplot_profit_fig)
+                ], style={'width': '48%', 'display': 'inline-block'}),
+            ])], style={'float': 'right', 'width': '80%'}),
 
-    html.Div([
+        html.Div([
             html.Div([
-                html.H3('Sales and Profit Graph'),
-                dcc.Graph(id='g3', figure=stacked)
-            ], style={'width': '48%', 'display': 'inline-block'}),
-            html.Div([
-                html.H3('Yearly Profit Graph'),
-                dcc.Graph(id='g4', figure=pie)
-            ], style={'width': '48%', 'display': 'inline-block'}),
-        ], style={'float': 'right', 'width': '80%'})
+                html.Div([GRAFICOS_NUNO]),
+                html.Div([
+                    html.H3('Stacked'),
+                    dcc.Graph(id='g3', figure=stacked)
+                ], style={'width': '48%', 'display': 'inline-block'}),
+                html.Div([
+                    html.H3('Pie'),
+                    dcc.Graph(id='g4', figure=pie)
+                ], style={'width': '48%', 'display': 'inline-block'}),
+            ])], style={'float': 'right', 'width': '80%'})
 
     ])
 ])
