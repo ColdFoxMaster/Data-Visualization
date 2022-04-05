@@ -35,6 +35,10 @@ df_linegraph = dummies.groupby(['Year']).sum().reset_index()
 sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group").update_layout(legend_title="Type")
 lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology']).update_xaxes(dtick=1).update_layout(legend_title="Category")
 
+stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack')
+
+pie = px.pie(df, values='Profit', names='Segment')
+
 # The App itself
 app = dash.Dash(__name__)
 server = app.server
@@ -52,7 +56,19 @@ app.layout = html.Div([
                 html.H3('Yearly Profit Graph'),
                 dcc.Graph(id='g2', figure=lineplot_profit_fig)
             ], style={'width': '48%', 'display': 'inline-block'}),
+        ], style={'float': 'right', 'width': '80%'}),
+
+    html.Div([
+            html.Div([
+                html.H3('Sales and Profit Graph'),
+                dcc.Graph(id='g3', figure=stacked)
+            ], style={'width': '48%', 'display': 'inline-block'}),
+            html.Div([
+                html.H3('Yearly Profit Graph'),
+                dcc.Graph(id='g4', figure=pie)
+            ], style={'width': '48%', 'display': 'inline-block'}),
         ], style={'float': 'right', 'width': '80%'})
+
     ])
 ])
 
