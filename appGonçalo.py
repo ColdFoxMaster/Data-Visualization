@@ -76,9 +76,11 @@ us_state_to_abbrev = {
     "U.S. Virgin Islands": "VI",
 }
 
+df['State'] = df['State'].map(lambda x: us_state_to_abbrev[x])
+
 # list of state codes
 
-states_codes = df['State'].map(us_state_to_abbrev).fillna(df['State']).unique()
+states_codes = sorted(df['State'].unique())
 
 ################################################RadioitemComponent#############################################################
 
@@ -135,12 +137,19 @@ def plot(subgroup):
 
     df_map = df.groupby(["Sub-Category", "State"]).sum("Quantity")["Quantity"]
 
+    d = dict.fromkeys(states_codes, 0)
+    z = dict(df_map[subgroup])
+
+    for key in z:
+        d[key] = z[key]
+    result = pd.Series(d)
+
 
     data_choropleth = dict(type='choropleth',
                            locations=states_codes,
                            #There are three ways to 'merge' your data with the data pre embedded in the map
                            locationmode='USA-states',
-                           z=df_map[subgroup].astype(float),
+                           z=result.astype(float),
                            colorscale='Reds',
                            colorbar=dict(title='Product Quantity')
                           )
