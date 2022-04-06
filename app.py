@@ -123,6 +123,9 @@ stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data
 
 pie = px.pie(df, values='Profit', names='Segment')
 
+df['DiscountMoney'] = df['Discount'] * df['Sales']
+sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney')
+
 # The App itself
 app = dash.Dash(__name__)
 server = app.server
@@ -152,7 +155,7 @@ app.layout = html.Div([
                         html.Div([
                             html.H3('Sunburst, or something...'),
                             html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
-                            dcc.Graph(id='g2', figure=lineplot_profit_fig)
+                            dcc.Graph(id='g2', figure=sunburst)
                         ], style={'width': '48%', 'display': 'inline-block'})])]),
                 html.Div([
                     html.Div([
