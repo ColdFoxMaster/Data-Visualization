@@ -129,16 +129,16 @@ server = app.server
 
 
 app.layout = html.Div([
-    html.H1(children='Projeto something'),
+    html.H1(children='Projeto something', style={'text-align':'center', 'font-family': 'arial'}),
     html.Div([
-        html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial'})], style={'float': 'left', 'width': '19%'}),
+        html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})], style={'float': 'left', 'width': '19%'}),
         html.Div([
             html.Div([
                 html.Div([html.Label('Product Sub-Categories'), radio_interaction], style={'width': "20%", 'font-family': 'arial'}),
                 html.Div([dcc.Graph(id='choropleth_graph')], style={'width': "80%"})], style={'display': 'flex'}),
             html.Div([
                 html.H3('Sales and Profit Graph'),
-                html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial'})]),
+                html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
                 dcc.Graph(id='bar_charts', figure=sales_profit_fig)
             ]),
             html.Div([
@@ -146,24 +146,24 @@ app.layout = html.Div([
                     html.Div([
                         html.Div([
                             html.H3('Yearly Profit Graph'),
-                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial'})]),
+                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
                             dcc.Graph(id='g1', figure=lineplot_profit_fig)
                         ], style={'width': '48%', 'display': 'inline-block'}),
                         html.Div([
                             html.H3('Sunburst, or something...'),
-                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial'})]),
+                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
                             dcc.Graph(id='g2', figure=lineplot_profit_fig)
                         ], style={'width': '48%', 'display': 'inline-block'})])]),
                 html.Div([
                     html.Div([
                         html.Div([
                             html.H3('Stacked'),
-                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial'})]),
+                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
                             dcc.Graph(id='g3', figure=stacked)
                         ], style={'width': '48%', 'display': 'inline-block'}),
                         html.Div([
                             html.H3('Pie'),
-                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial'})]),
+                            html.Div([html.Div([GRAFICOS_NUNO], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
                             dcc.Graph(id='g4', figure=pie)
                         ], style={'width': '48%', 'display': 'inline-block'}),
                     ])])
