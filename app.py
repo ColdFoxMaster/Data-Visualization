@@ -104,8 +104,8 @@ radio_interaction = dcc.RadioItems(
 # Sales and Profit chart
 df_3bar = df.filter(['Sub-Category', 'Sales', 'Discount', 'Profit'], axis=1)
 df_3bar['DiscountMoney'] = df_3bar['Discount'] * df_3bar['Sales']
-del df_3bar['Discount']
-df_3bar.rename(columns={'DiscountMoney':'Discount'}, inplace=True)
+#del df_3bar['Discount']
+#df_3bar.rename(columns={'DiscountMoney':'Discount'}, inplace=True)
 df_graph = df_3bar.groupby(['Sub-Category']).sum().reset_index()
 
 # Lineplot profit by category by year
