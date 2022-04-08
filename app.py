@@ -8,20 +8,21 @@ import pandas as pd
 import numpy as np
 
 # our imports
-from text_samples import BARRA_LATERAL, STACKED_BARCHART, SALES_PROFIT, YEAR_PROFIT, SUNBURST, CLIENT_BEHAVIOUR, PIE_CHART
+from text_samples import BARRA_LATERAL, STACKED_BARCHART, SALES_PROFIT, YEAR_PROFIT, SUNBURST, CLIENT_BEHAVIOUR, \
+    PIE_CHART
 
 # Dataset loading
-df = pd.read_csv('superstore.csv', encoding = "ISO-8859-1")
+df = pd.read_csv('superstore.csv', encoding="ISO-8859-1")
 
 # Dataset 'Processing'
 
-df['Year'] = pd.to_datetime(df['Ship Date']).dt.year # added a year column for easier data sorting
-df.drop(df.index[df['Year'] == 2018], inplace = True) # 2018 has incomplete data, so we drop the whole year
+df['Year'] = pd.to_datetime(df['Ship Date']).dt.year  # added a year column for easier data sorting
+df.drop(df.index[df['Year'] == 2018], inplace=True)  # 2018 has incomplete data, so we drop the whole year
 
 sub_categories = ['Bookcases', 'Chairs', 'Labels', 'Tables', 'Storage',
-       'Furnishings', 'Art', 'Phones', 'Binders', 'Appliances', 'Paper',
-       'Accessories', 'Envelopes', 'Fasteners', 'Supplies', 'Machines',
-       'Copiers']
+                  'Furnishings', 'Art', 'Phones', 'Binders', 'Appliances', 'Paper',
+                  'Accessories', 'Envelopes', 'Fasteners', 'Supplies', 'Machines',
+                  'Copiers']
 
 # State name to code
 us_state_to_abbrev = {
@@ -92,32 +93,35 @@ states_codes = sorted(df['State'].unique())
 
 ################################################RadioitemComponent#############################################################
 
-sub_categories_options = [dict(label=sub_category.replace('_', ' '), value=sub_category) for sub_category in sub_categories]
+sub_categories_options = [dict(label=sub_category.replace('_', ' '), value=sub_category) for sub_category in
+                          sub_categories]
 
 radio_interaction = dcc.RadioItems(
-        id='interaction',
-        options=sub_categories_options,
-        value='Bookcases',
-        labelStyle={'display': 'block'}
-    )
+    id='interaction',
+    options=sub_categories_options,
+    value='Bookcases',
+    labelStyle={'display': 'block'}
+)
 
 # Sales and Profit chart
 df_3bar = df.filter(['Sub-Category', 'Sales', 'Discount', 'Profit'], axis=1)
 df_3bar['DiscountMoney'] = df_3bar['Discount'] * df_3bar['Sales']
-#del df_3bar['Discount']
-#df_3bar.rename(columns={'DiscountMoney':'Discount'}, inplace=True)
+# del df_3bar['Discount']
+# df_3bar.rename(columns={'DiscountMoney':'Discount'}, inplace=True)
 df_graph = df_3bar.groupby(['Sub-Category']).sum().reset_index()
 
 # Lineplot profit by category by year
 df_lineplot = df.filter(['Year', 'Category', 'Profit'], axis=1)
 df_lineorganized = df_lineplot.groupby(['Year', 'Category'], as_index=False)['Profit'].sum()
-dummies = pd.get_dummies(df_lineorganized['Category']).mul(df_lineorganized.Profit,0)
+dummies = pd.get_dummies(df_lineorganized['Category']).mul(df_lineorganized.Profit, 0)
 dummies['Year'] = df_lineorganized['Year']
 df_linegraph = dummies.groupby(['Year']).sum().reset_index()
 
 # Building our Graphs (nothing new here)
-sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group").update_layout(legend_title="Type")
-lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology']).update_xaxes(dtick=1).update_layout(legend_title="Category")
+sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group").update_layout(
+    legend_title="Type")
+lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology']).update_xaxes(
+    dtick=1).update_layout(legend_title="Category")
 
 stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack')
 
@@ -130,56 +134,76 @@ sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMo
 app = dash.Dash(__name__)
 server = app.server
 
-
 app.layout = html.Div([
-    html.H1(children='Projeto something', style={'text-align':'center', 'font-family': 'arial'}),
+    html.H1(children='Projeto something', style={'text-align': 'center', 'font-family': 'arial'}),
     html.Div([
-        html.Div([html.Div([BARRA_LATERAL], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})], style={'float': 'left', 'width': '19%'}),
+        html.Div([html.Div([BARRA_LATERAL],
+                           style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial',
+                                  'margin-left': '20px', 'margin-left': '20px'})],
+                 style={'float': 'left', 'width': '19%'}),
         html.Div([
             html.Div([
-                html.Div([html.Label('Product Sub-Categories'), radio_interaction], style={'width': "20%", 'font-family': 'arial'}),
-                html.Div([dcc.Graph(id='choropleth_graph')], style={'width': "80%"})], style={'display': 'flex'}),
+                html.Div([html.Label('Product Sub-Categories'), radio_interaction],
+                         style={'width': "20%", 'font-family': 'arial'}),
+                html.Div([dcc.Graph(id='choropleth_graph')], style={'width': "80%"})], className="row pretty_container", style={'display': 'flex'}),
             html.Div([
                 html.H3('Sales and Profit Graph'),
-                html.Div([html.Div([SALES_PROFIT], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
-                dcc.Graph(id='bar_charts', figure=sales_profit_fig)
-            ]),
+                html.Div([html.Div([SALES_PROFIT],
+                                   style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial',
+                                          'margin-left': '20px', 'margin-left': '20px'})]),
+                dcc.Graph(id='bar_charts', figure=sales_profit_fig, className="pretty_container")
+            ], className="row pretty_container"),
             html.Div([
                 html.Div([
                     html.Div([
                         html.Div([
                             html.H3('Yearly Profit Graph'),
-                            html.Div([html.Div([YEAR_PROFIT], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
+                            html.Div([html.Div([YEAR_PROFIT], style={'text-align': 'justify', 'white-space': 'pre-wrap',
+                                                                     'font-family': 'arial', 'margin-left': '20px',
+                                                                     'margin-left': '20px'})]),
                             dcc.Graph(id='g1', figure=lineplot_profit_fig)
                         ], style={'width': '48%', 'display': 'inline-block'}),
                         html.Div([
                             html.H3('Sunburst, or something...'),
-                            html.Div([html.Div([SUNBURST], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
+                            html.Div([html.Div([SUNBURST], style={'text-align': 'justify', 'white-space': 'pre-wrap',
+                                                                  'font-family': 'arial', 'margin-left': '20px',
+                                                                  'margin-left': '20px'})]),
                             dcc.Graph(id='g2', figure=sunburst)
-                        ], style={'width': '48%', 'display': 'inline-block'})])]),
+                        ], style={'width': '48%', 'display': 'inline-block'})], className="row pretty_container")]),
                 html.Div([
                     html.Div([
                         html.Div([
                             html.H3('Client Behaviour'),
-                            html.Div([html.Div([CLIENT_BEHAVIOUR], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})])
+                            html.Div([html.Div([CLIENT_BEHAVIOUR],
+                                               style={'text-align': 'justify', 'white-space': 'pre-wrap',
+                                                      'font-family': 'arial', 'margin-left': '20px',
+                                                      'margin-left': '20px'})])
                         ]),
                         html.Div([
-                            html.H3('Stacked'),
-                            html.Div([html.Div([STACKED_BARCHART], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
-                            dcc.Graph(id='g3', figure=stacked)
-                        ], style={'width': '48%', 'display': 'inline-block'}),
-                        html.Div([
-                            html.H3('Pie'),
-                            html.Div([html.Div([PIE_CHART], style={'text-align':'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left' : '20px', 'margin-left' : '20px'})]),
-                            dcc.Graph(id='g4', figure=pie)
-                        ], style={'width': '48%', 'display': 'inline-block'}),
-                    ])])
-
+                            html.Div([
+                                html.H3('Stacked'),
+                                html.Div([html.Div([STACKED_BARCHART],
+                                                   style={'text-align': 'justify', 'white-space': 'pre-wrap',
+                                                          'font-family': 'arial', 'margin-left': '20px',
+                                                          'margin-left': '20px'})]),
+                                dcc.Graph(id='g3', figure=stacked)
+                            ], style={'width': '48%', 'display': 'inline-block'}),
+                            html.Div([
+                                html.H3('Pie'),
+                                html.Div([html.Div([PIE_CHART],
+                                                   style={'text-align': 'justify', 'white-space': 'pre-wrap',
+                                                          'font-family': 'arial', 'margin-left': '20px',
+                                                          'margin-left': '20px'})]),
+                                dcc.Graph(id='g4', figure=pie)
+                            ], style={'width': '48%', 'display': 'inline-block'}),
+                        ], className="row pretty_container")])
+                ], className="row pretty_container"),
             ])
         ], style={'float': 'right', 'width': '80%'})
 
     ])
 ])
+
 
 ##############################################callback#############################################################################
 
@@ -187,13 +211,10 @@ app.layout = html.Div([
     Output('choropleth_graph', 'figure'),
     Input('interaction', 'value')
 )
-
 ##############################################Graph################################################################################
-
 
 # Building Choropleth Graph
 def plot(subgroup):
-
     # I have to query the data to get only the sub_categories I want!!!!!
 
     df_map = df.groupby(["Sub-Category", "State"]).sum("Quantity")["Quantity"]
@@ -205,21 +226,20 @@ def plot(subgroup):
         d[key] = z[key]
     result = pd.Series(d)
 
-
     data_choropleth = dict(type='choropleth',
                            locations=states_codes,
-                           #There are three ways to 'merge' your data with the data pre embedded in the map
+                           # There are three ways to 'merge' your data with the data pre embedded in the map
                            locationmode='USA-states',
                            z=result.astype(float),
                            colorscale='Reds',
                            colorbar=dict(title='Product Quantity')
-                          )
+                           )
 
     layout_choropleth = dict(geo=dict(scope='usa'),
                              title=dict(text='Map of Purchases of the United States',
-                                        x=.5 # Title relative position according to the xaxis, range (0,1)
-                                       )
-                            )
+                                        x=.5  # Title relative position according to the xaxis, range (0,1)
+                                        )
+                             )
 
     fig = go.Figure(data=data_choropleth, layout=layout_choropleth)
     return fig
