@@ -133,6 +133,23 @@ sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMo
 # The App itself
 app = dash.Dash(__name__)
 server = app.server
+mapbox_access_token = "pk.eyJ1Ijoic3RlZmZlbmhpbGwiLCJhIjoiY2ttc3p6ODlrMG1ybzJwcG10d3hoaDZndCJ9.YE2gGNJiw6deBuFgHRHPjg"
+layout = dict(
+    autosize=True,
+    #automargin=True,
+    margin=dict(l=30, r=30, b=20, t=40),
+    hovermode="closest",
+    plot_bgcolor="#F9F9F9",
+    paper_bgcolor="#F9F9F9",
+    legend=dict(font=dict(size=10), orientation="h"),
+    title="Satellite Overview",
+    mapbox=dict(
+        accesstoken=mapbox_access_token,
+        style="light",
+        center=dict(lon=-78.05, lat=42.54),
+        zoom=7,
+    ),
+)
 
 app.layout = html.Div([
     html.H1(children='Projeto something', style={'text-align': 'center', 'font-family': 'arial'}),
