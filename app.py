@@ -173,7 +173,7 @@ app.layout = html.Div([
                             html.Div([html.Div([SUNBURST], style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                                   'font-family': 'arial', 'margin-left': '1%', 'vertical-align' :'top'})]),
                             dcc.Graph(id='g2', figure=sunburst, style={'margin-left': '1%'})
-                        ], className="row pretty_container", style={'width': '46%', 'display': 'float', 'float': 'right'})], className="row pretty_container")]),
+                        ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block', 'text-align': 'right'})], className="row pretty_container")]),
                 html.Div([
                     html.Div([
                         html.Div([
@@ -198,7 +198,7 @@ app.layout = html.Div([
                                                    style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                           'font-family': 'arial', 'margin-left': '1%', 'vertical-align' :'top'})]),
                                 dcc.Graph(id='g4', figure=pie, style={'margin-left': '1%'})
-                            ], className="row pretty_container", style={'width': '46%', 'display': 'float', 'float': 'right'}),
+                            ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block', 'text-align': 'right'}),
                         ], className="row pretty_container")])
                 ], className="row pretty_container"),
             ])
