@@ -230,7 +230,7 @@ def plot(subgroup):
                            # There are three ways to 'merge' your data with the data pre embedded in the map
                            locationmode='USA-states',
                            z=result.astype(float),
-                           colorscale=DEFAULT_COLORSCALE,
+                           colorscale='SunsetDark',
                            colorbar=dict(title='Product Quantity')
                            )
 
