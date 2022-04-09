@@ -140,7 +140,7 @@ app.layout = html.Div([
     html.Div([
         html.Div([html.Div([BARRA_LATERAL],
                            style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial',
-                                  'margin-left': '20px', 'margin-left': '20px'})],
+                                  'margin-left': '1%', 'margin-left': '1%'})],
                  style={'float': 'left', 'width': '24%'}),
         html.Div([
             html.Div([
@@ -151,7 +151,7 @@ app.layout = html.Div([
                 html.H3('Sales and Profit Graph'),
                 html.Div([html.Div([SALES_PROFIT],
                                    style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial',
-                                          'margin-left': '20px', 'margin-left': '20px'})]),
+                                          'margin-left': '1%', 'margin-left': '1%'})]),
                 dcc.Graph(id='bar_charts', figure=sales_profit_fig, className="pretty_container")
             ], className="row pretty_container"),
             html.Div([
@@ -161,14 +161,14 @@ app.layout = html.Div([
                             html.H3('Yearly Profit Graph'),
                             html.Div([html.Div([YEAR_PROFIT], style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                                      'font-family': 'arial',
-                                                                     'margin-left': '20px'})]),
-                            dcc.Graph(id='g1', figure=lineplot_profit_fig, style={'margin-right': '5px'})
+                                                                     'margin-left': '1%'})]),
+                            dcc.Graph(id='g1', figure=lineplot_profit_fig, style={'margin-right': '1%'})
                         ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'}),
                         html.Div([
                             html.H3('Sunburst, or something...'),
                             html.Div([html.Div([SUNBURST], style={'text-align': 'justify', 'white-space': 'pre-wrap',
-                                                                  'font-family': 'arial', 'margin-left': '20px'})]),
-                            dcc.Graph(id='g2', figure=sunburst, style={'margin-left': '5px'})
+                                                                  'font-family': 'arial', 'margin-left': '1%'})]),
+                            dcc.Graph(id='g2', figure=sunburst, style={'margin-left': '1%'})
                         ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'})], className="row pretty_container")]),
                 html.Div([
                     html.Div([
@@ -176,8 +176,8 @@ app.layout = html.Div([
                             html.H3('Client Behaviour'),
                             html.Div([html.Div([CLIENT_BEHAVIOUR],
                                                style={'text-align': 'justify', 'white-space': 'pre-wrap',
-                                                      'font-family': 'arial', 'margin-left': '20px',
-                                                      'margin-left': '20px'})])
+                                                      'font-family': 'arial', 'margin-left': '1%',
+                                                      'margin-left': '1%'})])
                         ]),
                         html.Div([
                             html.Div([
@@ -185,15 +185,15 @@ app.layout = html.Div([
                                 html.Div([html.Div([STACKED_BARCHART],
                                                    style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                           'font-family': 'arial',
-                                                          'margin-left': '20px'})]),
-                                dcc.Graph(id='g3', figure=stacked, style={'margin-right': '5px'})
+                                                          'margin-left': '1%'})]),
+                                dcc.Graph(id='g3', figure=stacked, style={'margin-right': '1%'})
                             ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'}),
                             html.Div([
                                 html.H3('Pie'),
                                 html.Div([html.Div([PIE_CHART],
                                                    style={'text-align': 'justify', 'white-space': 'pre-wrap',
-                                                          'font-family': 'arial', 'margin-left': '20px'})]),
-                                dcc.Graph(id='g4', figure=pie, style={'margin-left': '5px'})
+                                                          'font-family': 'arial', 'margin-left': '1%'})]),
+                                dcc.Graph(id='g4', figure=pie, style={'margin-left': '1%'})
                             ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'}),
                         ], className="row pretty_container")])
                 ], className="row pretty_container"),
