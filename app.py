@@ -24,6 +24,8 @@ sub_categories = ['Bookcases', 'Chairs', 'Labels', 'Tables', 'Storage',
                   'Accessories', 'Envelopes', 'Fasteners', 'Supplies', 'Machines',
                   'Copiers']
 
+DEFAULT_COLORSCALE = ['#0d0887', '#46039f', '#7201a8', '#9c179e', '#bd3786', '#d8576b', '#ed7953', '#fb9f3a', '#fdca26', '#f0f921']
+
 # State name to code
 us_state_to_abbrev = {
     "Alabama": "AL",
@@ -120,7 +122,7 @@ df_linegraph = dummies.groupby(['Year']).sum().reset_index()
 # Building our Graphs (nothing new here)
 sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group").update_layout(
     legend_title="Type")
-lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology']).update_xaxes(
+lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology'], markers=True).update_xaxes(
     dtick=1).update_layout(legend_title="Category")
 
 stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack')
@@ -228,7 +230,7 @@ def plot(subgroup):
                            # There are three ways to 'merge' your data with the data pre embedded in the map
                            locationmode='USA-states',
                            z=result.astype(float),
-                           colorscale='Reds',
+                           colorscale=DEFAULT_COLORSCALE,
                            colorbar=dict(title='Product Quantity')
                            )
 
