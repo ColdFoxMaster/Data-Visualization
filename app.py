@@ -24,7 +24,7 @@ sub_categories = ['Bookcases', 'Chairs', 'Labels', 'Tables', 'Storage',
                   'Accessories', 'Envelopes', 'Fasteners', 'Supplies', 'Machines',
                   'Copiers']
 
-DEFAULT_COLORSCALE = ['#0d0887', '#46039f', '#7201a8', '#9c179e', '#bd3786', '#d8576b', '#ed7953', '#fb9f3a', '#fdca26', '#f0f921']
+TREECOLORS = ['#fdca26', '#bd3786', '#0d0887']
 
 # State name to code
 us_state_to_abbrev = {
@@ -120,17 +120,17 @@ dummies['Year'] = df_lineorganized['Year']
 df_linegraph = dummies.groupby(['Year']).sum().reset_index()
 
 # Building our Graphs (nothing new here)
-sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group").update_layout(
+sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group", color_discrete_sequence=TREECOLORS).update_layout(
     legend_title="Type")
-lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology'], markers=True).update_xaxes(
+lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology'], markers=True, color_discrete_sequence=TREECOLORS).update_xaxes(
     dtick=1).update_layout(legend_title="Category")
 
-stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack')
+stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack', color_discrete_sequence=TREECOLORS)
 
-pie = px.pie(df, values='Profit', names='Segment')
+pie = px.pie(df, values='Profit', names='Segment', color_discrete_sequence=TREECOLORS)
 
 df['DiscountMoney'] = df['Discount'] * df['Sales']
-sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney')
+sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney', color_discrete_sequence=TREECOLORS)
 
 # The App itself
 app = dash.Dash(__name__)
