@@ -132,21 +132,24 @@ pie = px.pie(df, values='Profit', names='Segment', color_discrete_sequence=TREEC
 df['DiscountMoney'] = df['Discount'] * df['Sales']
 sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney', color_discrete_sequence=TREECOLORS)
 
+# style={'float': 'right', 'width': '75%'}
+# style={'float': 'left', 'width': '24%'})
+
 # The App itself
 app = dash.Dash(__name__)
 server = app.server
 app.layout = html.Div([
     html.H1(children='Projeto something', style={'text-align': 'center', 'font-family': 'arial'}),
     html.Div([
-        html.Div([html.Div([BARRA_LATERAL],
-                           style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial',
-                                  'margin-left': '1%', 'margin-left': '1%'})],
-                 style={'float': 'left', 'width': '24%'}),
         html.Div([
             html.Div([
-                html.Div([html.Label('Product Sub-Categories'), radio_interaction],
-                         style={'width': "20%", 'font-family': 'arial'}),
-                html.Div([dcc.Graph(id='choropleth_graph')], style={'width': "80%"})], className="row pretty_container", style={'display': 'flex'}),
+                html.Div([html.Div([BARRA_LATERAL], style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left': '1%', 'margin-left': '1%'})], style={'float': 'left', 'width': '19%', 'display': 'inline-block', 'vertical-align' :'top'}),
+                html.Div([
+                    html.Div([html.Label('Product Sub-Categories'), radio_interaction],
+                         style={'width': "20%", 'font-family': 'arial', 'display': 'inline-block', 'vertical-align' :'top'}),
+                    html.Div([dcc.Graph(id='choropleth_graph')], style={'width': "70%", 'display': 'inline-block'})
+                ], className="row pretty_container", style={'float': 'right', 'width': '75%', 'display': 'inline-block', 'vertical-align' :'top'})
+                ], style={'display': 'inline-block'}),
             html.Div([
                 html.H3('Sales and Profit Graph'),
                 html.Div([html.Div([SALES_PROFIT],
@@ -198,7 +201,7 @@ app.layout = html.Div([
                         ], className="row pretty_container")])
                 ], className="row pretty_container"),
             ])
-        ], style={'float': 'right', 'width': '75%'})
+        ])
 
     ])
 ])
