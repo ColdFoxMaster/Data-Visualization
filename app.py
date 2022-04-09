@@ -25,6 +25,7 @@ sub_categories = ['Bookcases', 'Chairs', 'Labels', 'Tables', 'Storage',
                   'Copiers']
 
 TREECOLORS = ['#fdca26', '#bd3786', '#0d0887']
+TREECOLORS_SUNBURST = ['#fdca26', '#0d0887', '#bd3786']
 
 # State name to code
 us_state_to_abbrev = {
@@ -130,7 +131,7 @@ stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data
 pie = px.pie(df, values='Profit', names='Segment', color_discrete_sequence=TREECOLORS)
 
 df['DiscountMoney'] = df['Discount'] * df['Sales']
-sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney', color_discrete_sequence=TREECOLORS)
+sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney', color_discrete_sequence=TREECOLORS_SUNBURST)
 
 # style={'float': 'right', 'width': '75%'}
 # style={'float': 'left', 'width': '24%'})
