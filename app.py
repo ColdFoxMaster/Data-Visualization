@@ -167,13 +167,13 @@ app.layout = html.Div([
                                                                      'font-family': 'arial',
                                                                      'margin-left': '1%', 'vertical-align' :'top'})]),
                             dcc.Graph(id='g1', figure=lineplot_profit_fig, style={'margin-right': '1%'})
-                        ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'}),
+                        ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block'}),
                         html.Div([
                             html.H3('Total discounts Sunburst graph', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                             html.Div([html.Div([SUNBURST], style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                                   'font-family': 'arial', 'margin-left': '1%', 'vertical-align' :'top'})]),
                             dcc.Graph(id='g2', figure=sunburst, style={'margin-left': '1%'})
-                        ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'})], className="row pretty_container")]),
+                        ], className="row pretty_container", style={'width': '46%', 'display': 'float', 'float': 'right'})], className="row pretty_container")]),
                 html.Div([
                     html.Div([
                         html.Div([
@@ -191,14 +191,14 @@ app.layout = html.Div([
                                                           'font-family': 'arial',
                                                           'margin-left': '1%', 'vertical-align' :'top'})]),
                                 dcc.Graph(id='g3', figure=stacked, style={'margin-right': '1%'})
-                            ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'}),
+                            ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block'}),
                             html.Div([
                                 html.H3('Types of clients', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                                 html.Div([html.Div([PIE_CHART],
                                                    style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                           'font-family': 'arial', 'margin-left': '1%', 'vertical-align' :'top'})]),
                                 dcc.Graph(id='g4', figure=pie, style={'margin-left': '1%'})
-                            ], className="row pretty_container", style={'width': '43%', 'display': 'inline-block'}),
+                            ], className="row pretty_container", style={'width': '46%', 'display': 'float', 'float': 'right'}),
                         ], className="row pretty_container")])
                 ], className="row pretty_container"),
             ])
