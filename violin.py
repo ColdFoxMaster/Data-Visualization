@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output, State
 import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
+import plotly.express as px
 
 df = pd.read_csv('superstore.csv', encoding='ISO-8859-1')
 
@@ -42,22 +43,22 @@ def plot(sub_category):
        corp = df.loc[(df["Segment"] == "Corporate") & (df["Sub-Category"] == sub_category)]["Sales"].round(2)
        home = df.loc[(df["Segment"] == "Home Office") & (df["Sub-Category"] == sub_category)]["Sales"].round(2)
 
-       trace0 = go.Box(
+       trace0 = go.Violin(
               y=cons,
               name="Consumer",
-              boxpoints=False
+              #boxpoints=False
        )
 
-       trace1 = go.Box(
+       trace1 = go.Violin(
               y=corp,
               name="Corporate",
-              boxpoints=False
+              #boxpoints=False
        )
 
-       trace2 = go.Box(
+       trace2 = go.Violin(
               y=home,
               name="Home Office",
-              boxpoints=False
+              #boxpoints=False
        )
 
        data = [trace0, trace1, trace2]
