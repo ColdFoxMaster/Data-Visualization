@@ -258,7 +258,7 @@ app.layout = html.Div([
 def plot(subgroup):
     # I have to query the data to get only the sub_categories I want!!!!!
 
-    df_map = df.groupby(["Sub-Category", "State"]).sum("Profit")["Profit"]
+    df_map = df.groupby(["Sub-Category", "State"]).sum("Profit")["Profit"].round(2)
 
     d = dict.fromkeys(states_codes, 0)
     z = dict(df_map[subgroup])
