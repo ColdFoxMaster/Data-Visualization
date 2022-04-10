@@ -258,7 +258,7 @@ app.layout = html.Div([
 def plot(subgroup):
     # I have to query the data to get only the sub_categories I want!!!!!
 
-    df_map = df.groupby(["Sub-Category", "State"]).sum("Quantity")["Quantity"]
+    df_map = df.groupby(["Sub-Category", "State"]).sum("Profit")["Profit"]
 
     d = dict.fromkeys(states_codes, 0)
     z = dict(df_map[subgroup])
@@ -272,7 +272,7 @@ def plot(subgroup):
                            # There are three ways to 'merge' your data with the data pre embedded in the map
                            locationmode='USA-states',
                            z=result.astype(float),
-                           colorscale='SunsetDark',
+                           colorscale='RdBu',
                            colorbar=dict(title='Product Quantity')
                            )
 
