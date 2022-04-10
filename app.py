@@ -273,7 +273,8 @@ def plot(subgroup):
                            locationmode='USA-states',
                            z=result.astype(float),
                            colorscale='RdBu',
-                           colorbar=dict(title='Product Quantity')
+                           colorbar=dict(title='Product Quantity'),
+                           zmid=0
                            )
 
     layout_choropleth = dict(geo=dict(scope='usa'),
