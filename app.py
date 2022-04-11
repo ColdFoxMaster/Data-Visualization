@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 import numpy as np
+from scipy import stats
 
 # our imports
 from text_samples import BARRA_LATERAL, STACKED_BARCHART, SALES_PROFIT, YEAR_PROFIT, SUNBURST, CLIENT_BEHAVIOUR, \
@@ -89,6 +90,30 @@ us_state_to_abbrev = {
 }
 
 df['State'] = df['State'].map(lambda x: us_state_to_abbrev[x])
+
+plot = ['Violin', 'Boxplot']
+
+sub_categories_options = [dict(label=sub_category.replace('_', ' '), value=sub_category) for sub_category in
+                          sub_categories]
+
+plot_options = [dict(label=sub_category.replace('_', ' '), value=sub_category) for sub_category in plot]
+
+dropdown_sub_category = dcc.Dropdown(
+    id='sub_category_option',
+    options=sub_categories_options,
+    value='Bookcases',
+    style={'font-family': 'arial'}
+)
+
+radio_projection = dcc.RadioItems(
+    id='projection',
+    options=[dict(label='Violin Plot', value=0,),
+             dict(label='Box Plot', value=1)],
+    value=0,
+    style={'font-family': 'arial'}
+)
+
+
 
 # list of state codes
 
@@ -211,6 +236,11 @@ app.layout = html.Div([
                                                               'font-family': 'arial',
                                                               'margin-left': '1%', 'vertical-align' :'top'})]),
                                     html.Br(),
+                                    html.Br(),
+                                    html.Br(),
+                                    html.Br(),
+                                    html.Br(),
+                                    html.Br(),
                                     dcc.Graph(id='g3', figure=stacked, style={'margin-right': '1%'})
                                 ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block'}),
                                 html.Div([
@@ -218,8 +248,14 @@ app.layout = html.Div([
                                     html.Div([html.Div([PIE_CHART],
                                                        style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                               'font-family': 'arial', 'margin-left': '1%', 'vertical-align' :'top'})]),
-                                    html.Br(),
-                                    dcc.Graph(id='g4', figure=pie, style={'margin-left': '1%'})
+                                    html.P("Select the Sub-Category", style={"text-align": "center", "font-weight": "bold", 'font-family': 'arial'}),
+                                    html.Div([
+                                        dropdown_sub_category
+                                    ], style={'text-align': 'left'}),
+                                    html.Div([
+                                        radio_projection
+                                    ], style={'text-align': 'center'}),
+                                    dcc.Graph(id="boxes")
                                 ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block', 'text-align': 'right'}),
                             ], className="row pretty_container")])
                     ], className="row pretty_container"),
@@ -245,17 +281,11 @@ app.layout = html.Div([
         ])
 ])
 
-
-##############################################callback#############################################################################
-
-@app.callback(
-    Output('choropleth_graph', 'figure'),
-    Input('interaction', 'value')
-)
-##############################################Graph################################################################################
+##############################################EXISTENCE IS PAIN###################################################################
 
 # Building Choropleth Graph
-def plot(subgroup):
+@app.callback(Output('choropleth_graph', 'figure'),Input('interaction', 'value'))
+def plot_chropleth(subgroup):
     # I have to query the data to get only the sub_categories I want!!!!!
 
     df_map = df.groupby(["Sub-Category", "State"]).sum("Profit")["Profit"].round(2)
@@ -286,6 +316,58 @@ def plot(subgroup):
     fig = go.Figure(data=data_choropleth, layout=layout_choropleth)
     return fig
 
+
+@app.callback(Output('boxes', 'figure'),[Input("projection", "value"), Input("sub_category_option", "value")])
+def plot_violin(plot_type, sub_category):
+    OUTLIER_FENCE = 3
+
+    cons = df.loc[(df["Segment"] == "Consumer") & (df["Sub-Category"] == sub_category) & (np.abs(stats.zscore(df['Sales'])) < OUTLIER_FENCE)]["Sales"].round(2)
+    corp = df.loc[(df["Segment"] == "Corporate") & (df["Sub-Category"] == sub_category) & (np.abs(stats.zscore(df['Sales'])) < OUTLIER_FENCE)]["Sales"].round(2)
+    home = df.loc[(df["Segment"] == "Home Office") & (df["Sub-Category"] == sub_category) & (np.abs(stats.zscore(df['Sales'])) < OUTLIER_FENCE)]["Sales"].round(2)
+
+    trace0 = go.Box(
+        y=cons,
+        name="Consumer"
+    )
+
+    trace1 = go.Box(
+        y=corp,
+        name="Corporate"
+    )
+
+    trace2 = go.Box(
+        y=home,
+        name="Home Office"
+    )
+    if plot_type == 0:
+        trace0 = go.Violin(
+            y=cons,
+            name="Consumer",
+
+        )
+
+        trace1 = go.Violin(
+            y=corp,
+            name="Corporate",
+
+        )
+
+        trace2 = go.Violin(
+            y=home,
+            name="Home Office",
+
+        )
+
+    data = [trace0, trace1, trace2]
+    layout = go.Layout(title='Distribution of sales by customer type and Sub-Category')
+
+    fig = go.Figure(data=data, layout=layout)
+    return fig
+
+
+##############################################callback#############################################################################
+
+##############################################Graph################################################################################
 
 if __name__ == '__main__':
     app.run_server(debug=True)
