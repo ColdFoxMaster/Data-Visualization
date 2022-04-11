@@ -185,13 +185,15 @@ app.layout = html.Div([
         ], style={'width': '30.6666666667%'}),
         html.Div([
             html.H2(children='Supply Chain Delivery Process Analysis', style={'text-align': 'center', 'font-family': 'arial', 'font-weight': 'bold'}),
-            html.H3(children='Analysis of the Delivery Process of a Large retail Company', style={'text-align': 'center', 'font-family': 'arial', 'font-weight': 'normal'})
+            html.H3(children='Analysis of the Delivery Process of a Large Retail Company', style={'text-align': 'center', 'font-family': 'arial', 'font-weight': 'normal'})
         ])
         ], style={'margin-bottom': '2%', 'margin-top': '2%'}),
         html.Div([
             html.Div([
                 html.Div([
-                    html.Div([html.Div([BARRA_LATERAL], style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left': '1%', 'margin-left': '1%'})], className="pretty_container", style={'float': 'left', 'width': '19%', 'display': 'inline-block', 'vertical-align' :'top'}),
+                    html.Div([
+                        html.H4('Project Overview', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top', 'margin-top': '2%', 'margin-bottom': '4%', 'font-weight': 'bold'}),
+                        html.Div([BARRA_LATERAL], style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left': '1%', 'margin-left': '1%'})], className="pretty_container", style={'float': 'left', 'width': '19%', 'display': 'inline-block', 'vertical-align' :'top'}),
                     html.Div([
                         html.Div([MAP, html.Label('Product Sub-Categories'), radio_interaction],
                              style={'width': "20%", 'font-family': 'arial', 'display': 'inline-block', 'vertical-align' :'top', 'white-space': 'pre-wrap'}, className="pretty_container"),
@@ -199,7 +201,7 @@ app.layout = html.Div([
                     ], className="row pretty_container", style={'float': 'right', 'width': '73%', 'display': 'inline-block', 'vertical-align' :'top'})
                     ], style={'display': 'inline-block'}),
                 html.Div([
-                    html.H3('Sales and Profit per Sub-Category', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
+                    html.H3('Sales and Profit per Sub-Category', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align':'top'}),
                     html.Div([html.Div([SALES_PROFIT],
                                        style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial',
                                               'margin-left': '1%', 'margin-left': '1%', 'vertical-align' :'top'})]),
@@ -234,7 +236,7 @@ app.layout = html.Div([
                             ]),
                             html.Div([
                                 html.Div([
-                                    html.H3('Profit by Type of Client', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
+                                    html.H3('Profit by CLient Type', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                                     html.Div([html.Div([STACKED_BARCHART],
                                                        style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                               'font-family': 'arial',
@@ -248,7 +250,7 @@ app.layout = html.Div([
                                     dcc.Graph(id='g3', figure=stacked, style={'margin-right': '1%'})
                                 ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block'}),
                                 html.Div([
-                                    html.H3('Types of Clients', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
+                                    html.H3('Sales of each Sub-Category by Client Type', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                                     html.Div([html.Div([PIE_CHART],
                                                        style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                               'font-family': 'arial', 'margin-left': '1%', 'vertical-align' :'top'})]),
@@ -327,7 +329,7 @@ def plot_chropleth(subgroup):
                            )
 
     layout_choropleth = dict(geo=dict(scope='usa'),
-                             title=dict(text='Map of Purchases of the United States',
+                             title=dict(text='Profit Value per US state"',
                                         x=.5  # Title relative position according to the xaxis, range (0,1)
                                         )
                              )
@@ -362,20 +364,17 @@ def plot_violin(plot_type, sub_category):
     if plot_type == 0:
         trace0 = go.Violin(
             y=cons,
-            name="Consumer",
-
+            name="Consumer"
         )
 
         trace1 = go.Violin(
             y=corp,
-            name="Corporate",
-
+            name="Corporate"
         )
 
         trace2 = go.Violin(
             y=home,
-            name="Home Office",
-
+            name="Home Office"
         )
 
     data = [trace0, trace1, trace2]
