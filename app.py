@@ -303,6 +303,7 @@ app.layout = html.Div([
 
 # Building Choropleth Graph
 @app.callback(Output('choropleth_graph', 'figure'),Input('interaction', 'value'))
+
 def plot_chropleth(subgroup):
     # I have to query the data to get only the sub_categories I want!!!!!
 
@@ -336,6 +337,7 @@ def plot_chropleth(subgroup):
 
 
 @app.callback(Output('boxes', 'figure'),[Input("projection", "value"), Input("sub_category_option", "value")])
+
 def plot_violin(plot_type, sub_category):
     OUTLIER_FENCE = 3
 
