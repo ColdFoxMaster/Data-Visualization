@@ -265,6 +265,10 @@ app.layout = html.Div([
                             html.Div([
                                 AUTHORS
                             ], style={'text-align': 'left', 'white-space': 'pre-wrap', 'font-family': 'arial', 'vertical-align' :'top'}),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
                             html.Br()
                         ])
                     ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block'}),
@@ -278,6 +282,10 @@ app.layout = html.Div([
                                 html.A(SOURCES[3], href=SOURCES[3]),
                                 SOURCES[4],
                                 html.A(SOURCES[5], href=SOURCES[5]),
+                                SOURCES[6],
+                                html.A(SOURCES[7], href=SOURCES[7]),
+                                SOURCES[8],
+                                html.A(SOURCES[9], href=SOURCES[9]),
                             ], style={'text-align': 'left', 'white-space': 'pre-wrap', 'font-family': 'arial', 'vertical-align' :'top'})
                         ])
                     ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block', 'text-align': 'right'})

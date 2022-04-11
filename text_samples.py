@@ -7,4 +7,9 @@ STACKED_BARCHART = "The stacked bar chart below allows us to visualize the previ
 PIE_CHART = "One last important step, this pie chart allows us to better visualize what each client class represents in terms of gross monetary sales profit for the retail company in this dataset.\n"
 MAP = "The map on the right shows the volume of purchases of a certain category of product, which can be selected with the radio button below.\n\n"
 AUTHORS = "> Nuno Penim - 20210998\n> Gonçalo Gomes - 20211007\n> Paulo Oliveira - 20211002"
-SOURCES = ["Theory > ", "https://ieeexplore.ieee.org/document/9445829", "\nDataset > ", "https://www.kaggle.com/datasets/vivek468/superstore-dataset-final", "\nThe CSS pretty container > ", "https://github.com/plotly/dash-sample-apps/tree/main/apps/dash-oil-and-gas"]
+SOURCES = ["Theory > ", "https://ieeexplore.ieee.org/document/9445829",
+           "\nDataset > ", "https://www.kaggle.com/datasets/vivek468/superstore-dataset-final",
+           "\nThe CSS pretty container > ", "https://github.com/plotly/dash-sample-apps/tree/main/apps/dash-oil-and-gas",
+           "\nExtra Theory Information > ", "https://www.altoastral.com.br/entretenimento/porcentagem-desconto-lucro/",
+           "\nExtra Theory Information > ", "https://www.smartcapitalmind.com/what-is-the-relationship-between-revenue-and-profit.htm"
+           ]
