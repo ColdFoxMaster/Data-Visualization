@@ -143,7 +143,7 @@ app.layout = html.Div([
     html.Div([
         html.Div([
             html.Img(
-                src=app.get_asset_url('Nova_IMS.png'),
+                src=app.get_asset_url('nova-ims.png'),
                 id='Nova-image',
                 style={
                     'height': '80px',
