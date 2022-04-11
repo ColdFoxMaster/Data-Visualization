@@ -193,7 +193,7 @@ app.layout = html.Div([
                 html.Div([
                     html.Div([
                         html.H4('Project Overview', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top', 'margin-top': '2%', 'margin-bottom': '4%', 'font-weight': 'bold'}),
-                        html.Div([BARRA_LATERAL], style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left': '1%', 'margin-left': '1%'})], className="pretty_container", style={'float': 'left', 'width': '19%', 'display': 'inline-block', 'vertical-align' :'top'}),
+                        html.Div([BARRA_LATERAL, html.Br()], style={'text-align': 'justify', 'white-space': 'pre-wrap', 'font-family': 'arial', 'margin-left': '1%', 'margin-left': '1%'})], className="pretty_container", style={'float': 'left', 'width': '19%', 'display': 'inline-block', 'vertical-align' :'top'}),
                     html.Div([
                         html.Div([MAP, html.Label('Product Sub-Categories'), radio_interaction],
                              style={'width': "20%", 'font-family': 'arial', 'display': 'inline-block', 'vertical-align' :'top', 'white-space': 'pre-wrap'}, className="pretty_container"),
