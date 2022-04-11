@@ -27,10 +27,11 @@ dropdown_sub_category = dcc.Dropdown(
     value='Bookcases',
 )
 
-dropdown_plot = dcc.Dropdown(
-    id='plot_options',
-    options=plot_options,
-    value='Violin',
+radio_projection = dcc.RadioItems(
+    id='projection',
+    options=[dict(label='Violin Plot', value=0),
+             dict(label='Box Plot', value=1)],
+    value=0
 )
 
 app = dash.Dash(__name__)
@@ -40,14 +41,14 @@ server = app.server
 app.layout = html.Div([
     html.P("Select the Sub-Category", style={"text-align": "center", "font-weight": "bold"}),
     dropdown_sub_category,
-    dropdown_plot,
+    radio_projection,
     dcc.Graph(id="boxes")
 ])
 
 
 @app.callback(
     Output('boxes', 'figure'),
-    [Input("plot_options", "value"), Input("sub_category_option", "value")],
+    [Input("projection", "value"), Input("sub_category_option", "value")],
 )
 def plot(plot_type, sub_category):
     cons = df.loc[(df["Segment"] == "Consumer") & (df["Sub-Category"] == sub_category)]["Sales"].round(2)
@@ -56,22 +57,19 @@ def plot(plot_type, sub_category):
 
     trace0 = go.Box(
         y=cons,
-        name="Consumer",
-        boxpoints=False
+        name="Consumer"
     )
 
     trace1 = go.Box(
         y=corp,
-        name="Corporate",
-        boxpoints=False
+        name="Corporate"
     )
 
     trace2 = go.Box(
         y=home,
-        name="Home Office",
-        boxpoints=False
+        name="Home Office"
     )
-    if plot_type == "Violin":
+    if plot_type == 0:
         trace0 = go.Violin(
             y=cons,
             name="Consumer",
