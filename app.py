@@ -264,14 +264,20 @@ app.layout = html.Div([
                             html.H3("Authors", style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                             html.Div([
                                 AUTHORS
-                            ], style={'text-align': 'left', 'white-space': 'pre-wrap', 'font-family': 'arial', 'vertical-align' :'top'})
+                            ], style={'text-align': 'left', 'white-space': 'pre-wrap', 'font-family': 'arial', 'vertical-align' :'top'}),
+                            html.Br()
                         ])
                     ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block'}),
                     html.Div([
                         html.Div([
                             html.H3("Sources", style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                             html.Div([
-                                SOURCES
+                                SOURCES[0],
+                                html.A(SOURCES[1], href=SOURCES[1]),
+                                SOURCES[2],
+                                html.A(SOURCES[3], href=SOURCES[3]),
+                                SOURCES[4],
+                                html.A(SOURCES[5], href=SOURCES[5]),
                             ], style={'text-align': 'left', 'white-space': 'pre-wrap', 'font-family': 'arial', 'vertical-align' :'top'})
                         ])
                     ], className="row pretty_container", style={'width': '46%', 'display': 'inline-block', 'text-align': 'right'})
