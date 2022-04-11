@@ -136,27 +136,31 @@ df_3bar = df.filter(['Sub-Category', 'Sales', 'Discount', 'Profit'], axis=1)
 df_3bar['DiscountMoney'] = df_3bar['Discount'] * df_3bar['Sales']
 # del df_3bar['Discount']
 # df_3bar.rename(columns={'DiscountMoney':'Discount'}, inplace=True)
-df_graph = df_3bar.groupby(['Sub-Category']).sum().reset_index()
+df_graph = df_3bar.groupby(['Sub-Category']).sum().reset_index().round(2)
 
 # Lineplot profit by category by year
 df_lineplot = df.filter(['Year', 'Category', 'Profit'], axis=1)
 df_lineorganized = df_lineplot.groupby(['Year', 'Category'], as_index=False)['Profit'].sum()
 dummies = pd.get_dummies(df_lineorganized['Category']).mul(df_lineorganized.Profit, 0)
 dummies['Year'] = df_lineorganized['Year']
-df_linegraph = dummies.groupby(['Year']).sum().reset_index()
+df_linegraph = dummies.groupby(['Year']).sum().reset_index().round({'Furniture': 2, 'Office Supplies': 2, 'Technology': 2})
 
 # Building our Graphs (nothing new here)
-sales_profit_fig = px.bar(df_graph, x="Sub-Category", y=["Sales", "Profit"], barmode="group", color_discrete_sequence=TREECOLORS).update_layout(
+sales_profit_fig = px.bar(df_graph.round({'Sales': 2, 'Profit': 2}), x="Sub-Category", y=["Sales", "Profit"], barmode="group", color_discrete_sequence=TREECOLORS).update_layout(
     legend_title="Type")
-lineplot_profit_fig = px.line(df_linegraph, x="Year", y=['Furniture', 'Office Supplies', 'Technology'], markers=True, color_discrete_sequence=TREECOLORS).update_xaxes(
+lineplot_profit_fig = px.line(df_linegraph.round({'Furniture': 2, 'Office Supplies': 2, 'Technology': 2}), x="Year", y=['Furniture', 'Office Supplies', 'Technology'], markers=True, color_discrete_sequence=TREECOLORS).update_xaxes(
     dtick=1).update_layout(legend_title="Category")
+sales_profit_fig.update_traces(yhoverformat = '.2f')
+lineplot_profit_fig.update_traces(yhoverformat = '.2f')
 
-stacked = px.histogram(df, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack', color_discrete_sequence=TREECOLORS)
+df_stacked = df.round({'Profit': 2})
+stacked = px.histogram(df_stacked, x="Segment", y="Profit", color="Category", hover_data=['Segment'], barmode='stack', color_discrete_sequence=TREECOLORS)
+stacked.update_traces(yhoverformat = '.2f')
 
 pie = px.pie(df, values='Profit', names='Segment', color_discrete_sequence=TREECOLORS)
 
 df['DiscountMoney'] = df['Discount'] * df['Sales']
-sunburst = px.sunburst(df, path=['Category', 'Sub-Category'], values='DiscountMoney', color_discrete_sequence=TREECOLORS_SUNBURST)
+sunburst = px.sunburst(df.round({'DiscountMoney': 2}), path=['Category', 'Sub-Category'], values='DiscountMoney', color_discrete_sequence=TREECOLORS_SUNBURST)
 
 # style={'float': 'right', 'width': '75%'}
 # style={'float': 'left', 'width': '24%'})
