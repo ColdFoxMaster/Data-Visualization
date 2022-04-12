@@ -324,12 +324,12 @@ def plot_chropleth(subgroup):
                            locationmode='USA-states',
                            z=result.astype(float),
                            colorscale='RdBu',
-                           colorbar=dict(title='Product Quantity'),
+                           colorbar=dict(title='Profit'),
                            zmid=0
                            )
 
     layout_choropleth = dict(geo=dict(scope='usa'),
-                             title=dict(text='Profit Value per US state"',
+                             title=dict(text='Profit Value per US state',
                                         x=.5  # Title relative position according to the xaxis, range (0,1)
                                         )
                              )
