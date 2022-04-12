@@ -236,7 +236,7 @@ app.layout = html.Div([
                             ]),
                             html.Div([
                                 html.Div([
-                                    html.H3('Profit by CLient Type', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
+                                    html.H3('Profit by Client Type', style={'text-align': 'center', 'font-family': 'arial', 'vertical-align' :'top'}),
                                     html.Div([html.Div([STACKED_BARCHART],
                                                        style={'text-align': 'justify', 'white-space': 'pre-wrap',
                                                               'font-family': 'arial',
